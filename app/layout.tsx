@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@/theme';
 import './global.css'
 import Layout from "@/layout";
 
@@ -8,11 +9,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <Layout>
-          {children}
-        </Layout>
-      </body>
+        <ThemeProvider>
+          <Layout>
+            {children}
+          </Layout>
+        </ThemeProvider>
     </html>
   )
 }
