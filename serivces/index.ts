@@ -1,5 +1,10 @@
 import { AmenitiesChildsResponse, AmenitiesParentsResponse, AmenityChild, AmenityParent } from "@/types"
 
+type FetchDataArgs = {
+    urlPath?: string,
+    searchParams?: {}
+} | undefined
+
 class AmenitiesService <U>{
     private baseUrl: string
 
@@ -7,13 +12,19 @@ class AmenitiesService <U>{
         this.baseUrl = baseUrl
     }
 
-    protected fetchData<V>(urlPath?: string) {
-        const url = `${this.baseUrl}${ urlPath }/?format=json`
+    protected fetchData<V>({urlPath, searchParams}: FetchDataArgs = {}) {
+        const finalSearchParams = {
+            ...searchParams,
+            format: 'json',
+        }
+        const url = `${this.baseUrl}${ urlPath || ''}/?${Object.entries(finalSearchParams).map(([param, value]) => `${param}=${value}`).join('&')}`
         return fetch(url).then<V>(res => res.json())
     }
 
     getAmenityById(id: string): Promise<U>{
-        return this.fetchData<U>(`/${id}`)
+        return this.fetchData<U>({
+            urlPath: `/${id}`
+        })
     }
 
 }
@@ -34,23 +45,30 @@ export class AmenitiesChildsService extends AmenitiesService<AmenityChild> {
         super('http://54.215.118.180:81/api/cat-amenities-childs')
     }
 
-    async getAllAmenities(): Promise<AmenityChild[]> {
-        const allAmenities: AmenityChild[] = []
+    async getAmenitiesByParentId(amenityParentId: number) {
+        let response = await this.fetchData<AmenitiesChildsResponse>({
+            searchParams: {
+                amenity_parent_id: amenityParentId
+            }
+        })
 
-        let response = await this.fetchData<AmenitiesChildsResponse>()
-        allAmenities.concat(response.results)
+        const amenities: AmenityChild[] = response.results
 
         while (response.next) {
-            response = await this.fetchData<AmenitiesChildsResponse>()
-            allAmenities.concat(response.results)
+            const searchParamsEntries = new URL(response.next)
+                .searchParams
+                .toString()
+                .split('&')
+                .map(param => param.split('='))
+                
+            const nextSearchParams = Object.fromEntries(searchParamsEntries)
+            response = await this.fetchData({
+                searchParams: nextSearchParams
+            })
+
+            amenities.concat(response.results)
         }
-
-        return allAmenities
-    }
-
-    async getAmenitiesByParentId(amenityParentId: number) {
-        const amenities = await this.getAllAmenities()
         
-        return amenities.filter(amenity => amenity.amenity_parent === amenityParentId)
+        return amenities
     }
 }
