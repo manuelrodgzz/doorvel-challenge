@@ -36,7 +36,7 @@ const Footer = () => {
             <Text
                 textColorOverride={{light: {color: 'white'}}}
             >
-                Manuel Rodríguez {new Date().getFullYear()}
+                Manuel Rodríguez. {new Date().getFullYear()}
             </Text>
         </StyledFooter>
     )
