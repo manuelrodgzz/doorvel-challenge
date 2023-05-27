@@ -23,22 +23,6 @@ const AmenityParentPageClient: FC<Props> = ({amenity, childAmenities}) => {
             <Text variant='h1'>{amenity.name}</Text>
 
             <Table columns={columns.current} rows={childAmenities} itemsPerPage={10}/>
-
-            {/* <Pages<AmenityChild>
-                items={childAmenities}
-                listUniqueId='amenity-child'
-                itemsPerPage={9}
-                noResultsMessage="No se encontraron child amenities para esta categoría 😯"
-                render={
-                    (amenity) => (
-                        <Card
-                            preText={`ID: ${String(amenity.id)}`}
-                            text={amenity.name}
-                            postText={`Seo Friendly: ${amenity.seo_friendly}`}
-                        />
-                    )
-                }
-            /> */}
         </>
     )
 }
