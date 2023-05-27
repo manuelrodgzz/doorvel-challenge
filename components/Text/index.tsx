@@ -24,7 +24,8 @@ type StyledTypographyProps = {
 
 type Props = { textColorOverride?: TextColorOverride } & TypographyProps
 
-const StyledTypography = styled(Typography, doNotForwardProps(['appTheme', 'textColorOverride']))<StyledTypographyProps>(({appTheme, textColorOverride}) => ({
+const StyledTypography = styled(Typography, doNotForwardProps(['appTheme', 'textColorOverride']))<StyledTypographyProps>(({appTheme, textColorOverride, variant}) => ({
+    marginBottom: variant === 'h1' ? '4rem' : 'unset',
     ...themedStyles[appTheme],
     ...((textColorOverride && textColorOverride[appTheme]) || {})
 }))

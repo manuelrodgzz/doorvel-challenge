@@ -1,5 +1,4 @@
 import { ThemeProvider } from '@/theme';
-import './global.css'
 import Layout from "@/layout";
 
 export default function RootLayout({

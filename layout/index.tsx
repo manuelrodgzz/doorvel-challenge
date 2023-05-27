@@ -28,12 +28,30 @@ const themedStyles: ThemedStyleObject = {
 }
 
 const StyledBody = styled('body', doNotForwardProps('appTheme'))<BodyProps>(props => css`
+    margin: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 
     main {
         padding: 4rem 0;
         flex: 1 1;
+    }
+
+    h1 {
+        font-size: 40px !important;
+    }
+
+    h2 {
+        font-size: 36px !important;
+    }
+
+    h3 {
+        font-size: 32px !important;
+    }
+
+    h4 {
+        font-size: 24px !important;
     }
 
     ${themedStyles[props.appTheme]}
@@ -47,12 +65,16 @@ const Layout: FC<Props> = ({children}) => {
 
     const pages: NavItem[] = [
         {
-            url: '/amenity-parent/2',
-            name: 'Impacto Ambiental'
+            url: '/',
+            name: 'Inicio'
         },
         {
             url: '/amenity-parent/1',
             name: 'Estilo de vida'
+        },
+        {
+            url: '/amenity-parent/2',
+            name: 'Impacto Ambiental'
         }
     ]
 

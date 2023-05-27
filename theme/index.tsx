@@ -7,6 +7,7 @@ export type Theme = 'light' | 'dark'
 
 export type ThemedStyleObject = Partial<Record<Theme, CSSObject>>
 
+// Named appTheme instead of theme to avoid collisions with the theme prop from @emotion styled components
 type ThemeContextValue = {
     themeBoolean: boolean
     appTheme: Theme,
