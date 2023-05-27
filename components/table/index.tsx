@@ -25,7 +25,13 @@ const themedStyles: ThemedStyleObject = {
 const DataGrid = styled(MUIDataGrid, doNotForwardProps('appTheme'))<StyledGridProps>(props => themedStyles[props.appTheme])
 
 const CustomNoRowsOverlay: FC<{}> = () => (<Box display='flex' justifyContent='center' alignItems='center' minHeight='100%'>
-    <Text>Sin resultados 🙁</Text>
+    <Text
+        textColorOverride={{
+            dark: { color: 'black' }
+        }}
+    >
+        Sin resultados 🙁
+    </Text>
 </Box>)
 
 const Table: FC<Props> = ({rows, columns, itemsPerPage}) => {
@@ -33,7 +39,7 @@ const Table: FC<Props> = ({rows, columns, itemsPerPage}) => {
     const { appTheme } = useContext(ThemeContext)
 
     return (
-        <Box sx={{height: 400, width: '100%'}}>
+        <Box sx={{height: 600, width: '100%'}}>
             <DataGrid
                 appTheme={appTheme}
                 rows={rows}
