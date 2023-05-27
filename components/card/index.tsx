@@ -1,8 +1,10 @@
 "use client"
-import { FC } from "react";
-import { Card as MUICard, CardContent } from '@mui/material'
+import { FC, useContext } from "react";
+import { Card as MUICard, CardContent, CardProps } from '@mui/material'
 import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 import Text from "../Text";
+import { Theme, ThemeContext, ThemedStyleObject } from "@/theme";
 
 type Props = {
     preText?: string
@@ -10,16 +12,34 @@ type Props = {
     postText?: string
 }
 
-const StyledCard = styled(MUICard)`
+type CustomCardProps = {
+    className?: string
+    appTheme: Theme
+} & CardProps
+
+const themedStyles: ThemedStyleObject = {
+    dark: {
+        backgroundColor: '#444444'
+    },
+    light: {
+    }
+}
+
+const Card: FC<CustomCardProps> = ({appTheme, ...props}) => <MUICard {...props}/>
+
+const StyledCard = styled(Card)(props => css`
     min-height: 20rem;
     display: flex;
     align-items: center;
-`
+    ${css(themedStyles[props.appTheme])}
+`)
 
-const Card: FC<Props> = ({preText, text, postText}) => {
+const CustomCard: FC<Props> = ({preText, text, postText}) => {
+
+    const { appTheme } = useContext(ThemeContext)
 
     return (
-        <StyledCard>
+        <StyledCard appTheme={appTheme}>
             <CardContent>
                 {
                     preText && (
@@ -49,4 +69,4 @@ const Card: FC<Props> = ({preText, text, postText}) => {
     )
 }
 
-export default Card
+export default CustomCard

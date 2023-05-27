@@ -1,15 +1,15 @@
 "use client"
 
-import { FC, ReactNode, createContext, useMemo, useState, useContext } from 'react'
+import { CSSObject } from '@emotion/react'
+import { FC, ReactNode, createContext, useMemo, useState } from 'react'
 
-export type Theme = {
-    text: string
-    background: string
-}
+export type Theme = 'light' | 'dark'
+
+export type ThemedStyleObject = Partial<Record<Theme, CSSObject>>
 
 type ThemeContextValue = {
     themeBoolean: boolean
-    theme: Theme,
+    appTheme: Theme,
     toggleTheme: () => void
 }
 
@@ -17,34 +17,24 @@ type Props = {
     children: ReactNode
 }
 
-const LIGHT_THEME: Theme = {
-    text: 'black',
-    background: 'white'
-}
-
-const DARK_THEME: Theme = {
-    text: 'white',
-    background: 'black'
-}
-
 export const ThemeContext = createContext<ThemeContextValue>({
     themeBoolean: false,
-    theme: LIGHT_THEME,
+    appTheme: 'light',
     toggleTheme: () => {}
 })
 
 
 export const ThemeProvider: FC<Props> = ({children}) => {
 
-    const [themeBoolean ,setThemeBoolean] = useState(false)
+    const [themeBoolean, setThemeBoolean] = useState(false)
 
     const toggleTheme = () => {
         setThemeBoolean(current => !current )
     }
 
-    const value = useMemo(() => ({
+    const value = useMemo<ThemeContextValue>(() => ({
         themeBoolean,
-        theme: themeBoolean ? DARK_THEME : LIGHT_THEME,
+        appTheme: themeBoolean ? 'dark' : 'light',
         toggleTheme
     }), [themeBoolean])
 

@@ -1,7 +1,9 @@
-import { useState, useMemo, ReactNode } from "react";
-import { Box, Pagination as MUIPagination, Grid } from "@mui/material";
+import { useState, useMemo, ReactNode, FC, useContext } from "react";
+import { Box, Pagination as MUIPagination, Grid, PaginationProps } from "@mui/material";
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import Text from "../Text";
+import { Theme, ThemeContext, ThemedStyleObject } from "@/theme";
 
 type Props<T> = {
     items: T[]
@@ -17,11 +19,41 @@ const PagesWrapper = styled(Box)`
     flex-direction: column;
     align-items: center;
 `
-const Pagination = styled(MUIPagination)`
+
+const themedStyles: ThemedStyleObject = {
+    dark: {
+        button: {
+            backgroundColor: 'white',
+            ':hover': {
+                backgroundColor: '#c9c9c9'
+            },
+            ':disabled': {
+                backgroundColor: '#FFFFFF',
+                color: '#d5d5d5',
+                opacity: 1
+            }
+        },
+        div: {
+            backgroundColor: 'white'
+        }
+    }
+}
+
+type CustomPaginationProps = {
+    className?: string
+    appTheme: Theme
+} & PaginationProps
+
+const CustomPagination: FC<CustomPaginationProps> = ({appTheme, ...props}) => <MUIPagination {...props}/>
+
+const Pagination = styled(CustomPagination)(props => css`
     padding-top: 2rem;
-`
+
+    ${css(themedStyles[props.appTheme])}
+`)
 
 const Pages = <T extends unknown>({items, listUniqueId, itemsPerPage, noResultsMessage, render}: Props<T>) => {
+    const { appTheme } = useContext(ThemeContext)
     const [activePage, setActivePage] = useState(1)
     const pages = useMemo<Array<T[]>>(() => {
         const _pages: Array<T[]> = []
@@ -50,8 +82,6 @@ const Pages = <T extends unknown>({items, listUniqueId, itemsPerPage, noResultsM
         return _pages
     },[])
 
-
-
     return (
         <PagesWrapper>
             <Box>
@@ -77,7 +107,13 @@ const Pages = <T extends unknown>({items, listUniqueId, itemsPerPage, noResultsM
                 }
             </Box>
 
-            <Pagination page={activePage} count={ pages[activePage] ? itemsPerPage : 0} onChange={(e, newPage) => setActivePage(newPage)} color='primary'/>
+            <Pagination
+                appTheme={appTheme}
+                page={activePage}
+                count={ pages[activePage] ? itemsPerPage : 0}
+                onChange={(e, newPage) => setActivePage(newPage)}
+                color='primary'
+            />
         </PagesWrapper>
     )
 }
