@@ -106,13 +106,15 @@ const Pages = <T extends unknown>({items, listUniqueId, itemsPerPage, noResultsM
                 }
             </Box>
 
-            <Pagination
-                appTheme={appTheme}
-                page={activePage}
-                count={ pages[activePage] ? itemsPerPage : 0}
-                onChange={(e, newPage) => setActivePage(newPage)}
-                color='primary'
-            />
+            {
+                pages[activePage] && <Pagination
+                    appTheme={appTheme}
+                    page={activePage}
+                    count={ itemsPerPage }
+                    onChange={(e, newPage) => setActivePage(newPage)}
+                    color='primary'
+                />
+            }
         </PagesWrapper>
     )
 }

@@ -20,7 +20,7 @@ const AmenityParentPageClient: FC<Props> = ({amenity, childAmenities}) => {
                 items={childAmenities}
                 listUniqueId='amenity-child'
                 itemsPerPage={9}
-                noResultsMessage="No amenity children found for this category 😯"
+                noResultsMessage="No se encontraron child amenities para esta categoría 😯"
                 render={
                     (amenity) => (
                         <Card
