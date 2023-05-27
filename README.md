@@ -17,12 +17,29 @@ yarn install
 
 ```bash
 
-npm run  dev
+npm run dev
 
 # or
 
 yarn dev
 
+```
+
+## Run Prodution Build
+1. Build the site
+
+```bash
+
+npm run build
+
+# or
+
+yarn build
+```
+
+2. Run the production build
+```bash
+npx next start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
