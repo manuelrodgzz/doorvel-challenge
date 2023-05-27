@@ -1,4 +1,5 @@
 import Text from "@/components/Text";
+import { Metadata } from "next";
 
 export default function Home() {
   return (
@@ -20,4 +21,8 @@ export default function Home() {
       <Text>Esperamos que disfrutes navegando por nuestro sitio web y encuentres las amenidades ideales para mejorar tu experiencia en tu propiedad. ¡Gracias por visitarnos y que encuentres exactamente lo que estás buscando!</Text>
     </>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Inicio'
 }

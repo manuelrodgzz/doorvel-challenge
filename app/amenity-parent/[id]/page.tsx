@@ -1,5 +1,6 @@
 import { AmenitiesChildsService, AmenitiesParentsService } from '@/services'
 import AmenityParentPageClient from './client'
+import { Metadata } from 'next'
 
 type Props = {
     params: {
@@ -29,6 +30,14 @@ export const generateStaticParams = async () => {
     return amenities.map(amenity => ({
         id: String(amenity.id)
     }))
+}
+
+export const generateMetadata = async ({params}: Props): Promise<Metadata> => {
+    const service = new AmenitiesParentsService()
+    const amenity = await service.getAmenityById(params.id)
+    return {
+        title: `Amenidad | ${amenity.name}`
+    }
 }
 
 // Prevents NextJS from rendering a page that was not generated with generateStaticParams
