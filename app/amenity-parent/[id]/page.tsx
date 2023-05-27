@@ -1,4 +1,4 @@
-import { AmenitiesChildsService, AmenitiesParentsService } from '@/serivces'
+import { AmenitiesChildsService, AmenitiesParentsService } from '@/services'
 import AmenityParentPageClient from './client'
 
 type Props = {

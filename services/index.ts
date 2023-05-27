@@ -18,6 +18,7 @@ class AmenitiesService <U>{
             format: 'json',
         }
         const url = `${this.baseUrl}${ urlPath || ''}/?${Object.entries(finalSearchParams).map(([param, value]) => `${param}=${value}`).join('&')}`
+        console.log(url)
         return fetch(url).then<V>(res => res.json())
     }
 
@@ -46,6 +47,7 @@ export class AmenitiesChildsService extends AmenitiesService<AmenityChild> {
     }
 
     async getAmenitiesByParentId(amenityParentId: number) {
+        console.log(1)
         let response = await this.fetchData<AmenitiesChildsResponse>({
             searchParams: {
                 amenity_parent_id: amenityParentId
@@ -53,6 +55,7 @@ export class AmenitiesChildsService extends AmenitiesService<AmenityChild> {
         })
 
         const amenities: AmenityChild[] = response.results
+        console.log(amenities.length)
 
         while (response.next) {
             const searchParamsEntries = new URL(response.next)
@@ -66,9 +69,10 @@ export class AmenitiesChildsService extends AmenitiesService<AmenityChild> {
                 searchParams: nextSearchParams
             })
 
-            amenities.concat(response.results)
+            amenities.push(...response.results)
         }
-        
+        console.log(2)
+        console.log(amenities.length)
         return amenities
     }
 }

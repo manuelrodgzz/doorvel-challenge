@@ -87,7 +87,7 @@ const Pages = <T extends unknown>({items, listUniqueId, itemsPerPage, noResultsM
                 {
                     <Grid container spacing={2}>
                         {
-                            pages[activePage]?.map((item, i) => {
+                            pages[activePage - 1]?.map((item, i) => {
                                 const key = `${ listUniqueId }-${i}`
                                 return (
                                     <Grid key={key} item xs={12} lg={4}>
@@ -107,10 +107,10 @@ const Pages = <T extends unknown>({items, listUniqueId, itemsPerPage, noResultsM
             </Box>
 
             {
-                pages[activePage] && <Pagination
+                pages[activePage - 1] && <Pagination
                     appTheme={appTheme}
                     page={activePage}
-                    count={ itemsPerPage }
+                    count={ pages.length }
                     onChange={(e, newPage) => setActivePage(newPage)}
                     color='primary'
                 />
