@@ -6,6 +6,8 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { Theme, ThemeContext, ThemedStyleObject } from '@/theme';
 import doNotForwardProps from '@/utils/doNotForwardProps';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export type NavItem = {
     url: string
@@ -73,6 +75,7 @@ const Header: FC<Props> = ({ pages }) => {
             </Box>
 
             <Box display='flex' alignItems='center'>
+                { themeBoolean ? <DarkModeIcon /> : <LightModeIcon /> }
                 <Switch checked={ themeBoolean } onChange={() => toggleTheme()} />
             </Box>
         </StyledNavbar>
