@@ -5,6 +5,7 @@ import { AppBar, Box, Button, Switch } from "@mui/material";
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { Theme, ThemeContext, ThemedStyleObject } from '@/theme';
+import doNotForwardProps from '@/utils/doNotForwardProps';
 
 export type NavItem = {
     url: string
@@ -21,15 +22,6 @@ type NavbarProps = {
     className?: string
 }
 
-const Navbar: FC<NavbarProps> = ({children, className}) => {
-
-    return (
-        <AppBar className={className}>
-            {children}
-        </AppBar>
-    )
-}
-
 const themedStyles: ThemedStyleObject = {
     dark: {
         backgroundColor: 'black',
@@ -39,10 +31,17 @@ const themedStyles: ThemedStyleObject = {
     }
 }
 
-const StyledNavbar = styled(Navbar)(props => css`
+const StyledNavbar = styled(AppBar, doNotForwardProps('appTheme'))<NavbarProps>(props => css`
     flex-direction: row;
     justify-content: space-between;
     position: relative;
+    min-height: 5rem;
+    flex: 0 1;
+
+    @media screen and (min-width: 1025px) {
+
+        padding: 0 5rem;
+    }
     
     a {
         text-decoration: none;
@@ -73,7 +72,7 @@ const Header: FC<Props> = ({ pages }) => {
                 }
             </Box>
 
-            <Box>
+            <Box display='flex' alignItems='center'>
                 <Switch checked={ themeBoolean } onChange={() => toggleTheme()} />
             </Box>
         </StyledNavbar>

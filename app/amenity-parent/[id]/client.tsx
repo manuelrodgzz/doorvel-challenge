@@ -14,7 +14,7 @@ const AmenityParentPageClient: FC<Props> = ({amenity, childAmenities}) => {
 
     return (
         <>
-            <Text variant='h1' my={8}>{amenity.name}</Text>
+            <Text variant='h1' mb={8}>{amenity.name}</Text>
 
             <Pages<AmenityChild>
                 items={childAmenities}

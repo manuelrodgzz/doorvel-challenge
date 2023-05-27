@@ -1,7 +1,8 @@
 "use client"
 import { Theme, ThemeContext, ThemedStyleObject } from "@/theme";
-import styled from "@emotion/styled";
-import { Typography as MUITypography, TypographyProps } from "@mui/material";
+import doNotForwardProps from "@/utils/doNotForwardProps";
+import styled, { CSSObject } from "@emotion/styled";
+import { Typography, TypographyProps } from "@mui/material";
 import { FC, useContext } from "react";
 
 const themedStyles: ThemedStyleObject = {
@@ -13,20 +14,22 @@ const themedStyles: ThemedStyleObject = {
     }
 }
 
-type CustomTypographyProps = { 
+type TextColorOverride = Partial<Record<Theme, CSSObject>>
+
+type StyledTypographyProps = { 
     className?: string
     appTheme: Theme
+    textColorOverride?: TextColorOverride
 } & TypographyProps
 
-const Typography: FC<CustomTypographyProps> = ({appTheme, ...props}) => (
-    <MUITypography {...props}>
+type Props = { textColorOverride?: TextColorOverride } & TypographyProps
 
-    </MUITypography>
-)
+const StyledTypography = styled(Typography, doNotForwardProps(['appTheme', 'textColorOverride']))<StyledTypographyProps>(({appTheme, textColorOverride}) => ({
+    ...themedStyles[appTheme],
+    ...((textColorOverride && textColorOverride[appTheme]) || {})
+}))
 
-const StyledTypography = styled(Typography)(props => themedStyles[props.appTheme])
-
-const Text: FC<TypographyProps> = (props) => {
+const Text: FC<Props> = (props) => {
 
     const { appTheme } = useContext(ThemeContext)
 

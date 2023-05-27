@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import Text from "../Text";
 import { Theme, ThemeContext, ThemedStyleObject } from "@/theme";
+import doNotForwardProps from "@/utils/doNotForwardProps";
 
 type Props = {
     preText?: string
@@ -21,13 +22,9 @@ const themedStyles: ThemedStyleObject = {
     dark: {
         backgroundColor: '#444444'
     },
-    light: {
-    }
 }
 
-const Card: FC<CustomCardProps> = ({appTheme, ...props}) => <MUICard {...props}/>
-
-const StyledCard = styled(Card)(props => css`
+const StyledCard = styled(MUICard, doNotForwardProps('appTheme'))<CustomCardProps>(props => css`
     min-height: 20rem;
     display: flex;
     align-items: center;

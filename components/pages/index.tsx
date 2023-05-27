@@ -1,9 +1,10 @@
-import { useState, useMemo, ReactNode, FC, useContext } from "react";
+import { useState, useMemo, ReactNode, useContext } from "react";
 import { Box, Pagination as MUIPagination, Grid, PaginationProps } from "@mui/material";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import Text from "../Text";
 import { Theme, ThemeContext, ThemedStyleObject } from "@/theme";
+import doNotForwardProps from "@/utils/doNotForwardProps";
 
 type Props<T> = {
     items: T[]
@@ -44,9 +45,7 @@ type CustomPaginationProps = {
     appTheme: Theme
 } & PaginationProps
 
-const CustomPagination: FC<CustomPaginationProps> = ({appTheme, ...props}) => <MUIPagination {...props}/>
-
-const Pagination = styled(CustomPagination)(props => css`
+const Pagination = styled(MUIPagination, doNotForwardProps('appTheme'))<CustomPaginationProps>(props => css`
     padding-top: 2rem;
 
     ${css(themedStyles[props.appTheme])}
