@@ -58,7 +58,7 @@ const StyledBody = styled('body', doNotForwardProps('appTheme'))<BodyProps>(prop
 `)
 
 /** It is not possible to import server components from client components BUT it its possible to pass server components
- * to client components throughs props. This Layout is a client component but will receive a server component throught
+ * to client components through props. This Layout is a client component but will receive a server component through
  * the children prop*/
 const Layout: FC<Props> = ({children}) => {
     const { appTheme } = useContext(ThemeContext)
